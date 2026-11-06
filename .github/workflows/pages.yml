@@ -1,0 +1,47 @@
+name: Publish laboratory pages
+on:
+  push:
+    branches: ['lab-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: laboratory-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Collect sites from lab branches
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir public
+          printf '%s\n' '<!doctype html><html lang="uk"><meta charset="utf-8"><title>Лабораторні роботи</title><h1>Лабораторні роботи</h1><ul>' > public/index.html
+          while read -r branch; do
+            [[ "$branch" =~ ^lab-[0-9]+$ ]] || continue
+            ref="refs/remotes/origin/$branch"
+            git cat-file -e "$ref:site/index.html" 2>/dev/null || continue
+            mkdir -p "public/$branch"
+            git archive "$ref:site" | tar -x -C "public/$branch"
+            printf '<li><a href="%s/">Лабораторна №%d</a></li>\n' "$branch" "$((10#${branch#lab-}))" >> public/index.html
+          done < <(git for-each-ref --format='%(refname:strip=3)' 'refs/remotes/origin/lab-*')
+          echo '</ul></html>' >> public/index.html
+          test -f public/lab-01/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - name: Deploy
+        id: deploy
+        uses: actions/deploy-pages@v4
