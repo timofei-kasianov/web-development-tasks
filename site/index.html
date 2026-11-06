@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Фізична читальня · Орбіта-03</title>
+</head>
+<body>
+  <header>
+    <h1>Фізична читальня групи «Орбіта-03»</h1>
+    <p>Матеріали для спільного читання та обговорення фізики.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Книга тижня</h2>
+      <img src="book.svg" width="176" height="96"
+           alt="Відкрита книга з позначеннями маси та енергії">
+      <p>Навчальна збірка «Маса, світло та енергія».</p>
+      <table>
+        <caption>Зміст збірки</caption>
+        <thead>
+          <tr><th scope="col">Назва розділу</th><th scope="col">Сторінка</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Вимірювання маси</td><td>3</td></tr>
+          <tr><td>Швидкість світла</td><td>9</td></tr>
+          <tr><td>Маса та енергія спокою</td><td>17</td></tr>
+        </tbody>
+      </table>
+      <p><a href="reader.html#energy">Читати розділ «Маса та енергія спокою»</a></p>
+    </section>
+    <section>
+      <h2>Формула з розділу</h2>
+      <p lang="en"><strong><i>E=mc<sup>2</sup></i></strong>, where
+        <strong>E</strong> - energy of the object, <strong>m</strong> - it's mass,
+        <strong>c</strong> - speed of light in vacuum, equals to
+        299&nbsp;792&nbsp;458 <i>m/s</i></p>
+    </section>
+    <section>
+      <h2>Картка читача</h2>
+      <form action="reader.html#reading" method="get">
+        <fieldset>
+          <legend>Навчальні дані студента</legend>
+          <p><label for="student">Студент групи</label>
+            <select id="student" name="student" required>
+              <option value="">Виберіть зі списку</option>
+              <option value="marta">Марта Коваленко</option>
+              <option value="ostap">Остап Савчук</option>
+              <option value="solomiia">Соломія Бондар</option>
+              <option value="taras">Тарас Мельник</option>
+            </select></p>
+          <p><label for="course">Курс</label>
+            <input id="course" name="course" type="number" min="1" max="6" required></p>
+          <button type="submit">Перейти до завдання</button>
+        </fieldset>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
